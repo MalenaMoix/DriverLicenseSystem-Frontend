@@ -4,8 +4,8 @@ import IssueLicence from './IssueLicence'
 const IssueLicenceContainer = () =>{
     const [form, setForm] = useState({
         dni:"",
-        claseLicencia:"",
-        observaciones:""
+        licenceClass:"A",
+        observations:""
     })
 
     const handleChange = e => {
@@ -13,6 +13,7 @@ const IssueLicenceContainer = () =>{
             ...form,
             [e.target.name]: e.target.value
         })
+        console.log(form)
     }
 
     //TODO Hacer el handleSubmit
