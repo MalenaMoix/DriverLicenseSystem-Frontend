@@ -5,7 +5,14 @@ const IssueLicenceContainer = () =>{
     const [form, setForm] = useState({
         dni:"",
         licenceClass:"A",
-        observations:""
+        observations:"",
+        name:"",
+        birthDate:"",
+        address:"",
+        bloodType:"",
+        donor:"",
+        validUntil:"",
+        cost:""
     })
 
     const handleChange = e => {
@@ -22,15 +29,16 @@ const IssueLicenceContainer = () =>{
     }
 
     //TODO Hacer el handleSubmitDNI
-    const handleSubmitDNI = async e => {
-
+    const getUser = async e => {
+        e.preventDefault();
+        alert(`El DNI es: ${form.dni}`);
     }
 
     return <IssueLicence
         form={form}
         onChange={handleChange}
         onSubmit={handleSubmit}
-        onSubmitDNI={handleSubmitDNI}
+        getUser={getUser}
     />
 }
 

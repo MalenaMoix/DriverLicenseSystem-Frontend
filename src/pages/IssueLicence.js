@@ -1,13 +1,13 @@
 import React from 'react'
 import IssueLicenceForm from '../components/IssueLicenceForm'
 
-const IssueLicence = ({form, onChange, onSubmit, onSubmitDNI}) =>(
+const IssueLicence = ({form, onChange, onSubmit, getUser}) =>(
     <div>
         <IssueLicenceForm
             form={form}
             onChange={onChange}
             onSubmit={onSubmit}
-            onSubmitDNI={onSubmitDNI}
+            getUser={getUser}
         />
     </div>
 )
