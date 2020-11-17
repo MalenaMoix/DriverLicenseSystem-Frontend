@@ -65,6 +65,10 @@ const IssueLicenceForm = ({ form, onChange, onSubmit, onSubmitDNI }) =>(
                     value={form.observations}
                 ></TextareaField>
             </div>
+            <div className="form-group">
+                <Button marginRight={16} height={56} appearance="primary">Cancelar</Button>
+                <Button marginRight={16} height={56} appearance="primary">Aceptar</Button>
+            </div>
         </form>
     </div>
 )
