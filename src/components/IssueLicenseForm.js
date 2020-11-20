@@ -1,35 +1,33 @@
 import React from 'react'
 import {TextInputField,TextInput,TextareaField,Button,SelectField,FormField} from "evergreen-ui"
 
-const IssueLicenceForm = ({ form, onChange, onSubmit, getUser }) =>(
+const IssueLicenseForm = ({ license, licenseOwner, onChangeLicense, onChangeLicenseOwner, onSubmit, getLicenseOwner, getCostAndValidUntil }) =>(
     <div className="container">
         <form onSubmit={onSubmit}>
             <TextInputField
                 label="DNI:"
-                name="dni"
+                name="document"
                 placeholder="41824917"
-                onChange={onChange}
-                value={form.dni}
+                onChange={onChangeLicenseOwner}
+                value={licenseOwner.document}
             />
 
-            <Button onClick={getUser} appearance="primary" marginRight={16} height={56}>Buscar titular</Button>
+            <Button onClick={getLicenseOwner} appearance="primary" marginRight={16} height={56}>Buscar titular</Button>
 
             <TextInputField
                 label="Documento:"
-                name="dniLbl"
+                name="documentLbl"
                 placeHolde={""}
                 disabled
-                onChange={onChange}
-                value={form.dni}
+                value={licenseOwner.document}
             />
 
             <TextInputField
                 label="Apellido y nombre:"
-                name="nameLbl"
+                name="lastNameAndNameLbl"
                 placeHolde={""}
                 disabled
-                onChange={onChange}
-                value={form.name}
+                value={`${licenseOwner.lastName} ${licenseOwner.name}`}
             />
 
             <TextInputField
@@ -37,8 +35,7 @@ const IssueLicenceForm = ({ form, onChange, onSubmit, getUser }) =>(
                 name="birthDateLbl"
                 placeHolde={""}
                 disabled
-                onChange={onChange}
-                value={form.birthDate}
+                value={licenseOwner.birthDate}
             />
 
             <TextInputField
@@ -46,8 +43,7 @@ const IssueLicenceForm = ({ form, onChange, onSubmit, getUser }) =>(
                 name="addressLbl"
                 placeHolde={""}
                 disabled
-                onChange={onChange}
-                value={form.address}
+                value={licenseOwner.address}
             />
 
             <TextInputField
@@ -55,24 +51,23 @@ const IssueLicenceForm = ({ form, onChange, onSubmit, getUser }) =>(
                 name="bloodTypeLbl"
                 placeHolde={""}
                 disabled
-                onChange={onChange}
-                value={form.bloodType}
+                value={licenseOwner.bloodType}
             />
 
             <TextInputField
                 label="Es donante:"
-                name="donorLbl"
+                name="isDonorLbl"
                 placeHolde={""}
                 disabled
-                onChange={onChange}
-                value={form.donor}
+                value={licenseOwner.donor? "Si" : "No"}
             />
 
             <SelectField
                 label="Clase de licencia"
-                name="licenceClass"
-                onChange={onChange}
-                value={form.licenceClass}
+                name="licenseClass"
+                //Ver si aca puedo hacer un onChange con un get para esta
+                onChange={onChangeLicense}
+                value={license.licenseClass}
             >
                 <option value="A" selected>A</option>
                 <option value="B">B</option>
@@ -83,13 +78,14 @@ const IssueLicenceForm = ({ form, onChange, onSubmit, getUser }) =>(
                 <option value="G">G</option>
             </SelectField>
 
+            <Button onClick={getCostAndValidUntil} appearance="primary" marginRight={16} height={56}>Calcular costo y vigencia</Button>
+
             <TextInputField
                 label="Valida hasta:"
-                name="validUntilLbl"
+                name="licenseTermLbl"
                 placeHolde={""}
                 disabled
-                onChange={onChange}
-                value={form.validUntil}
+                value={license.licenseTerm}
             />
 
             <TextInputField
@@ -97,16 +93,15 @@ const IssueLicenceForm = ({ form, onChange, onSubmit, getUser }) =>(
                 name="costLbl"
                 placeHolde={""}
                 disabled
-                onChange={onChange}
-                value={form.cost}
+                value={license.licenseCost}
             />
 
             <TextareaField
                 label="Observaciones:"
                 name="observations"
                 placeholder="Escriba aqui las observaciones..."
-                onChange={onChange}
-                value={form.observations}
+                onChange={onChangeLicense}
+                value={license.observations}
             ></TextareaField>
 
             <div className="buttonGroup">
@@ -117,4 +112,4 @@ const IssueLicenceForm = ({ form, onChange, onSubmit, getUser }) =>(
     </div>
 )
 
-export default IssueLicenceForm
+export default IssueLicenseForm

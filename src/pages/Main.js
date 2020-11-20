@@ -7,7 +7,7 @@ const Main = () =>(
         <Heading size={700} marginTop="default">Sistema de gestion de licencias de conducir</Heading>
         <Heading size={700} marginTop="default">Municipalidad de Santa Fe</Heading>
         <div>
-            <Link to="/issueLicence">
+            <Link to="/issueLicense">
                 <Button marginRight={16} height={56} appearance="primary">Emitir Licencia</Button>
             </Link>
             <Link to="/registerUser">
