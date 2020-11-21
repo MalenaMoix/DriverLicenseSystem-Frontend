@@ -90,6 +90,7 @@ const IssueLicenseContainer = ({history}) =>{
             history.push("/main")
         } catch (error) {
             console.log("Error en el POST")
+            alert("No se pudo guardar la licencia!")
             //Ver si pongo algo aca
         }
     }
