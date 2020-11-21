@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import IssueLicense from './IssueLicense'
 
-const IssueLicenseContainer = () =>{
+const IssueLicenseContainer = ({history}) =>{
     const [licenseOwner, setLicenseOwner] = useState({
         document:"",
         name:"",
@@ -41,7 +41,9 @@ const IssueLicenseContainer = () =>{
     //TODO
     const handleSubmit = async e => {
         e.preventDefault()
+        
         try {
+            history.push("/main")
             let config = {
                 method:"POST",
                 headers:{
@@ -52,12 +54,15 @@ const IssueLicenseContainer = () =>{
             }
             //await fetch("La url va aca", config) solo asi anda, eso es para que imprima en consola, para probar
             let res = await fetch(`http://localhost:9090/license`, config)//.then para mostrar algo aca TODO
-            let json = await res.json()
+            history.push("/main")
+            
+            let json = await res.json() // no es necesario, no anda despues de esta asignacion
+            
             console.log(json)
-            //Esto era que no me andaba en el tutorial, ver con tomi
-            this.props.history.push("/main")
+             
         } catch (error) {
             //Ver si pongo algo aca
+            
         }
     }
 
@@ -78,6 +83,7 @@ const IssueLicenseContainer = () =>{
                 //console.log("No existe")
                 //TODO Borrar datos de la pantalla
             }
+           
             
         } catch (error) {
             console.log("Error de usuario")
