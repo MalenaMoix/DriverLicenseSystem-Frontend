@@ -1,9 +1,9 @@
 import React from 'react'
-import {TextInputField,TextInput,TextareaField,Button,SelectField,FormField} from "evergreen-ui"
+import {TextInputField,TextareaField,Button,SelectField} from "evergreen-ui"
 
-const IssueLicenseForm = ({ license, licenseOwner, onChangeLicense, onChangeLicenseOwner, onSubmit, getLicenseOwner, getCostAndValidUntil }) =>(
+const IssueLicenseForm = ({ license, licenseOwner, onChangeLicense, onChangeLicenseOwner, onSubmit, onCancel, getLicenseOwner, getCostAndValidUntil }) =>(
     <div className="container">
-        <form onSubmit={onSubmit}>
+        <form>
             <TextInputField
                 label="DNI:"
                 name="document"
@@ -65,7 +65,6 @@ const IssueLicenseForm = ({ license, licenseOwner, onChangeLicense, onChangeLice
             <SelectField
                 label="Clase de licencia"
                 name="licenseClass"
-                //Ver si aca puedo hacer un onChange con un get para esta
                 onChange={onChangeLicense}
                 value={license.licenseClass}
             >
@@ -105,7 +104,7 @@ const IssueLicenseForm = ({ license, licenseOwner, onChangeLicense, onChangeLice
             ></TextareaField>
 
             <div className="buttonGroup">
-                <Button marginRight={16} height={56} appearance="primary">Cancelar</Button>
+                <Button onClick={onCancel} marginRight={16} height={56} appearance="primary">Cancelar</Button>
                 <Button onClick={onSubmit} marginRight={16} height={56} appearance="primary">Aceptar</Button>
             </div>
         </form>

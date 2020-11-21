@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState } from 'react'
 import IssueLicense from './IssueLicense'
 
 const IssueLicenseContainer = ({history}) =>{
@@ -27,7 +27,6 @@ const IssueLicenseContainer = ({history}) =>{
             ...license,
             [e.target.name]: e.target.value
         })
-        console.log(license)
     }
 
     const handleChangeLicenseOwner = e => {
@@ -35,38 +34,8 @@ const IssueLicenseContainer = ({history}) =>{
             ...licenseOwner,
             [e.target.name]: e.target.value
         })
-        //console.log(licenseOwner)
     }
 
-    //TODO
-    const handleSubmit = async e => {
-        e.preventDefault()
-        
-        try {
-            history.push("/main")
-            let config = {
-                method:"POST",
-                headers:{
-                    "Accept":"application/json",
-                    "Content-type":"application/json",
-                },
-                body: JSON.stringify(license)
-            }
-            //await fetch("La url va aca", config) solo asi anda, eso es para que imprima en consola, para probar
-            let res = await fetch(`http://localhost:9090/license`, config)//.then para mostrar algo aca TODO
-            history.push("/main")
-            
-            let json = await res.json() // no es necesario, no anda despues de esta asignacion
-            
-            console.log(json)
-             
-        } catch (error) {
-            //Ver si pongo algo aca
-            
-        }
-    }
-
-    //TODO
     const getLicenseOwner = async e => {
         e.preventDefault();
         try {
@@ -75,25 +44,18 @@ const IssueLicenseContainer = ({history}) =>{
             if(res.ok){
                 setLicenseOwner(data)
                 license.licenseOwner=licenseOwner
-                //console.log(data)
-                //console.log(licenseOwner)
-                console.log(licenseOwner)
-                //Aca actualizo el form con la data
             }else{
-                //console.log("No existe")
+                console.log("No existe")
                 //TODO Borrar datos de la pantalla
             }
-           
-            
         } catch (error) {
             console.log("Error de usuario")
         }
-        
+
     }
     const getCostAndValidUntil = async e =>{
         e.preventDefault();
         try {
-            console.log("Entro en el boton pa")
             let config = {
                 method:"POST",
                 headers:{
@@ -105,12 +67,33 @@ const IssueLicenseContainer = ({history}) =>{
             let res = await fetch(`http://localhost:9090/license/getCostAndValidUntil`, config)
             let data = await res.json()
             setLicense(data)
-            console.log(license)
-            
         } catch (error) {
-            //Poner algo aca
             console.log("Error en la DB")
         }
+    }
+
+    const handleSubmit = async e => {
+        e.preventDefault()
+        try {
+            let config = {
+                method:"POST",
+                headers:{
+                    "Accept":"application/json",
+                    "Content-type":"application/json",
+                },
+                body: JSON.stringify(license)
+            }
+            await fetch(`http://localhost:9090/license`, config)//.then para mostrar algo aca TODO
+            history.push("/main")
+        } catch (error) {
+            console.log("Error en el POST")
+            //Ver si pongo algo aca
+        }
+    }
+
+    const handleCancel = e =>{
+        e.preventDefault()
+        history.push("/main")
     }
 
     return <IssueLicense
@@ -119,6 +102,7 @@ const IssueLicenseContainer = ({history}) =>{
         onChangeLicense={handleChangeLicense}
         onChangeLicenseOwner={handleChangeLicenseOwner}
         onSubmit={handleSubmit}
+        onCancel={handleCancel}
         getLicenseOwner={getLicenseOwner}
         getCostAndValidUntil={getCostAndValidUntil}
     />
