@@ -55,18 +55,21 @@ const IssueLicenseContainer = ({history}) =>{
     }
     const getCostAndValidUntil = async e =>{
         e.preventDefault();
+        let observations = license.observations;
         try {
-            let config = {
-                method:"POST",
-                headers:{
-                    "Accept":"application/json",
-                    "Content-type":"application/json",
-                },
-                body: JSON.stringify(license)
-            }
-            let res = await fetch(`http://localhost:9090/license/getCostAndValidUntil`, config)
+            // let config = {
+            //     method:"POST",
+            //     headers:{
+            //         "Accept":"application/json",
+            //         "Content-type":"application/json",
+            //     },
+            //     body: JSON.stringify(license)
+            // }
+            let res = await fetch(`http://localhost:9090/license/${license.licenseOwner.document}/${license.licenseClass}`)
             let data = await res.json()
+            data.observations=observations
             setLicense(data)
+            console.log(data)
         } catch (error) {
             console.log("Error en la DB")
         }

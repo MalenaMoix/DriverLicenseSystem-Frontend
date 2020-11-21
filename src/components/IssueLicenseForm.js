@@ -45,7 +45,7 @@ const IssueLicenseForm = ({ license, licenseOwner, onChangeLicense, onChangeLice
                 disabled
                 value={licenseOwner.address}
             />
-
+           
             <TextInputField
                 label="Grupo sanguineo:"
                 name="bloodTypeLbl"
@@ -53,7 +53,7 @@ const IssueLicenseForm = ({ license, licenseOwner, onChangeLicense, onChangeLice
                 disabled
                 value={licenseOwner.bloodType}
             />
-
+ 
             <TextInputField
                 label="Es donante:"
                 name="isDonorLbl"
@@ -61,8 +61,8 @@ const IssueLicenseForm = ({ license, licenseOwner, onChangeLicense, onChangeLice
                 disabled
                 value={licenseOwner.donor? "Si" : "No"}
             />
-
-            <SelectField
+           
+            <SelectField flex={1}
                 label="Clase de licencia"
                 name="licenseClass"
                 onChange={onChangeLicense}
@@ -78,7 +78,7 @@ const IssueLicenseForm = ({ license, licenseOwner, onChangeLicense, onChangeLice
             </SelectField>
 
             <Button onClick={getCostAndValidUntil} appearance="primary" marginRight={16} height={56}>Calcular costo y vigencia</Button>
-
+        
             <TextInputField
                 label="Valida hasta:"
                 name="licenseTermLbl"
