@@ -43,7 +43,7 @@ const IssueLicenseContainer = ({history}) =>{
             let data = await res.json()
             if(res.ok){
                 setLicenseOwner(data)
-                license.licenseOwner=licenseOwner
+                setLicense({...license, licenseOwner})
             }else{
                 console.log("No existe")
                 //TODO Borrar datos de la pantalla
@@ -68,7 +68,7 @@ const IssueLicenseContainer = ({history}) =>{
             let res = await fetch(`http://localhost:9090/license/${license.licenseOwner.document}/${license.licenseClass}`)
             let data = await res.json()
             data.observations=observations
-            setLicense(data)
+            setLicense({...license, licenseCost: data.licenseCost, licenseTerm:data.licenseTerm})
             console.log(data)
         } catch (error) {
             console.log("Error en la DB")
