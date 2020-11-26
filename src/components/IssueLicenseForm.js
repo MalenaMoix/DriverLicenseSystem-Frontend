@@ -1,10 +1,12 @@
 import React from 'react'
 import {TextInputField,TextareaField,Button,SelectField,Pane} from "evergreen-ui"
-
-const IssueLicenseForm = ({ license, licenseOwner, onChangeLicense, onChangeLicenseOwner, onSubmit, onCancel, getLicenseOwner, getCostAndValidUntil }) =>(
+const IssueLicenseForm = ({ license, licenseOwner, costIsCalculated,ownerFound, onChangeLicense, onChangeLicenseOwner, onSubmit, onCancel, getLicenseOwner, getCostAndValidUntil }) =>(
+  
     <div className="container">
-        <form>
+       
+        <form>           
             <Pane marginLeft={24} marginRight={24} marginTop={24} marginBottom={24}>
+                
                 <Pane display="flex">
                     <TextInputField
                         flex={1}
@@ -13,6 +15,7 @@ const IssueLicenseForm = ({ license, licenseOwner, onChangeLicense, onChangeLice
                         placeholder="41824917"
                         onChange={onChangeLicenseOwner}
                         value={licenseOwner.document}
+                        maxLength={12}
                     />
                     <Button
                         onClick={getLicenseOwner}
@@ -21,13 +24,12 @@ const IssueLicenseForm = ({ license, licenseOwner, onChangeLicense, onChangeLice
                         marginTop={25}
                         height={30}>Buscar titular</Button>
                 </Pane>
-
-                <TextInputField
+            <TextInputField
                     label="Documento:"
                     name="documentLbl"
                     placeHolde={""}
                     disabled
-                    value={licenseOwner.document}
+                    value={ownerFound ? licenseOwner.document : ""}
                 />
 
                 <TextInputField
@@ -35,7 +37,7 @@ const IssueLicenseForm = ({ license, licenseOwner, onChangeLicense, onChangeLice
                     name="lastNameAndNameLbl"
                     placeHolde={""}
                     disabled
-                    value={`${licenseOwner.lastName} ${licenseOwner.name}`}
+                    value={ownerFound ? (`${licenseOwner.lastName} ${licenseOwner.name}`) : ""}
                 />
 
                 <TextInputField
@@ -43,7 +45,7 @@ const IssueLicenseForm = ({ license, licenseOwner, onChangeLicense, onChangeLice
                     name="birthDateLbl"
                     placeHolde={""}
                     disabled
-                    value={licenseOwner.birthDate}
+                    value={ownerFound ? licenseOwner.birthDate : ""}
                 />
 
                 <TextInputField
@@ -51,7 +53,7 @@ const IssueLicenseForm = ({ license, licenseOwner, onChangeLicense, onChangeLice
                     name="addressLbl"
                     placeHolde={""}
                     disabled
-                    value={licenseOwner.address}
+                    value={ownerFound ? licenseOwner.address : ""}
                 />
             
                 <TextInputField
@@ -59,7 +61,7 @@ const IssueLicenseForm = ({ license, licenseOwner, onChangeLicense, onChangeLice
                     name="bloodTypeLbl"
                     placeHolde={""}
                     disabled
-                    value={licenseOwner.bloodType}
+                    value={ownerFound ? licenseOwner.bloodType : ""}
                 />
     
                 <TextInputField
@@ -67,7 +69,7 @@ const IssueLicenseForm = ({ license, licenseOwner, onChangeLicense, onChangeLice
                     name="isDonorLbl"
                     placeHolde={""}
                     disabled
-                    value={licenseOwner.donor? "Si" : "No"}
+                    value={ownerFound ? (licenseOwner.donor ? "Si" : "No") : ""}
                 />
 
                 <Pane display="flex">
@@ -76,7 +78,7 @@ const IssueLicenseForm = ({ license, licenseOwner, onChangeLicense, onChangeLice
                         label="Clase de licencia"
                         name="licenseClass"
                         onChange={onChangeLicense}
-                        value={license.licenseClass}
+                        value={ownerFound ? license.licenseClass : ""}
                     >
                         <option value="A" selected>A</option>
                         <option value="B">B</option>
@@ -96,7 +98,7 @@ const IssueLicenseForm = ({ license, licenseOwner, onChangeLicense, onChangeLice
                     name="licenseTermLbl"
                     placeHolde={""}
                     disabled
-                    value={license.licenseTerm}
+                    value={costIsCalculated ? license.licenseTerm : ""}
                 />
 
                 <TextInputField
@@ -104,15 +106,16 @@ const IssueLicenseForm = ({ license, licenseOwner, onChangeLicense, onChangeLice
                     name="costLbl"
                     placeHolde={""}
                     disabled
-                    value={license.licenseCost}
+                    value={costIsCalculated ? license.licenseCost : ""}
                 />
 
                 <TextareaField
                     label="Observaciones:"
                     name="observations"
                     placeholder="Escriba aqui las observaciones..."
+                    maxLength={100}
                     onChange={onChangeLicense}
-                    value={license.observations}
+                    value={ownerFound ? license.observations : ""}
                 ></TextareaField>
 
                 <Pane>
