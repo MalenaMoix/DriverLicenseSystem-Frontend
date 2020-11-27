@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
-import { Button,Heading,Pane,TextInputField} from 'evergreen-ui'
+import { Button,Heading,Pane} from 'evergreen-ui'
 
 const Main = () =>(
     <Fragment>
