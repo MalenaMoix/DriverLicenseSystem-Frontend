@@ -1,4 +1,5 @@
-import React, { useState,useEffect } from 'react'
+import { toaster } from 'evergreen-ui'
+import React, { useState} from 'react'
 import IssueLicense from './IssueLicense'
 
 const IssueLicenseContainer = ({history}) =>{
@@ -22,14 +23,14 @@ const IssueLicenseContainer = ({history}) =>{
         licenseCost:""
     })
 
-    const[costIsCalculated, setCostIsCalculated] = useState(false);
-    const[ownerFound, setOwnerFound] = useState(false);
+    const[costIsCalculated, setCostIsCalculated] = useState(false)
+    const[ownerFound, setOwnerFound] = useState(false)
+    const[dialogIsShown, setDialogIsShown] = useState(false)
 
     const handleChangeLicense = e => {
        
         if(e.target.name==="licenseClass"){
             setCostIsCalculated(false)
-        
         }
         setLicense({
             ...license,
@@ -50,7 +51,7 @@ const IssueLicenseContainer = ({history}) =>{
       
         if(licenseOwner.document===""){
             setOwnerFound(false)
-            alert("POR FAVOR, INGRESE EL DNI DEL TITULAR.")
+            toaster.danger("POR FAVOR, INGRESE EL DNI DEL TITULAR.", {duration:5})
         }
         else{
             try {
@@ -70,19 +71,19 @@ const IssueLicenseContainer = ({history}) =>{
                         setOwnerFound(false)
                         console.log("No existe y doc es null")
                         //TODO Borrar datos de la pantalla
-                        alert("TITULAR NO ENCONTRADO")
+                        setDialogIsShown(true)
                     }
                 }
                 else{
                     setOwnerFound(false)
                     console.log("No existe")
                     //TODO Borrar datos de la pantalla
-                    alert("TITULAR NO ENCONTRADO")
+                    setDialogIsShown(true)
                 }
             } catch (error) {
                 setOwnerFound(false)
                 console.log("Error de usuario")
-                alert("ERROR AL BUSCAR TITULAR EN LA BASE DE DATOS.")
+                toaster.danger("ERROR AL BUSCAR TITULAR EN LA BASE DE DATOS.", {duration:5})
             }
         }
        
@@ -101,17 +102,17 @@ const IssueLicenseContainer = ({history}) =>{
               
             } catch (error) {
                 console.log("Error en la DB")
-                alert("ERROR AL CALCULAR COSTO Y VIGENCIA DE LA LICENCIA.")
+                toaster.danger("ERROR AL CALCULAR COSTO Y VIGENCIA DE LA LICENCIA.", {duration:5})
             }
         }
         else{
-            alert("NO SE HA SELECCIONADO NINGUN TITULAR.")
+            toaster.warning("NO SE HA SELECCIONADO NINGUN TITULAR.", {duration:5})
         }
     }
 
     const handleSubmit = async e => {
-        if(costIsCalculated){
         e.preventDefault()
+        if(costIsCalculated){
         try {
             let config = {
                 method:"POST",
@@ -124,33 +125,42 @@ const IssueLicenseContainer = ({history}) =>{
             let res = await fetch(`http://localhost:9090/license`, config)
             switch(res.status){
                 case (200):{
-                    alert("LICENCIA GUARDADA CON EXITO")
+                    toaster.success("LICENCIA GUARDADA CON EXITO", {duration:5}) 
+                    history.replace("/main")
                     break
                 }
                 case (403):{
-                    alert("EL TITULAR NO ES APTO PARA ESTA LICENCIA.")
+                    toaster.danger("EL TITULAR NO ES APTO PARA ESTA LICENCIA.", {duration:5})
                     break
                 }
                 default:{
-                    alert("ERROR DEL SERVIDOR.")
+                    toaster.danger("ERROR DEL SERVIDOR.", {duration:5})
                 }
             }//.then para mostrar algo aca TODO
             
-            history.push("/main")
+           
         } catch (error) {
             console.log("Error en el POST")
-            alert("No se pudo guardar la licencia. Reintententelo.")
+            toaster.danger("No se pudo guardar la licencia. Reintententelo.", {duration:5})
             //Ver si pongo algo aca
         }
     }
     else{
-        alert("Falta calcular costo y vigencia de la licencia")
+        toaster.warning("Falta calcular costo y vigencia de la licencia", {duration:5})
     }
     }
 
     const handleCancel = e =>{
         e.preventDefault()
-        history.push("/main")
+        history.replace("/main")
+    }
+
+    const handleCancelDialog = () =>{
+        setDialogIsShown(false)
+    }
+    const handleConfirmDialog = () => {
+        setDialogIsShown(false)
+        history.push("/registerUser")
     }
 
     return <IssueLicense
@@ -158,6 +168,9 @@ const IssueLicenseContainer = ({history}) =>{
         licenseOwner={licenseOwner}
         costIsCalculated={costIsCalculated}
         ownerFound={ownerFound}
+        dialogIsShown = {dialogIsShown}
+        handleConfirmDialog = {handleConfirmDialog}
+        handleCancelDialog = {handleCancelDialog}
         onChangeLicense={handleChangeLicense}
         onChangeLicenseOwner={handleChangeLicenseOwner}
         onSubmit={handleSubmit}

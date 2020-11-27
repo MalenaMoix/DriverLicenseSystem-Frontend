@@ -1,9 +1,19 @@
 import React from 'react'
-import {TextInputField,TextareaField,Button,SelectField,Pane} from "evergreen-ui"
-const IssueLicenseForm = ({ license, licenseOwner, costIsCalculated,ownerFound, onChangeLicense, onChangeLicenseOwner, onSubmit, onCancel, getLicenseOwner, getCostAndValidUntil }) =>(
+import {TextInputField,TextareaField,Button,SelectField,Pane,Dialog} from "evergreen-ui"
+const IssueLicenseForm = ({ license, licenseOwner, costIsCalculated,ownerFound,dialogIsShown, handleConfirmDialog, handleCancelDialog, onChangeLicense, onChangeLicenseOwner, onSubmit, onCancel, getLicenseOwner, getCostAndValidUntil }) =>(
   
     <div className="container">
-       
+     
+        <Dialog
+            isShown={dialogIsShown}
+            title="TITULAR INEXISTENTE"
+            confirmLabel="Crear titular"
+            onConfirm={handleConfirmDialog}
+            onCancel={handleCancelDialog}
+            cancelLabel="No">
+            ¿Desea crear un nuevo titular?
+        </Dialog>
+
         <form>           
             <Pane marginLeft={24} marginRight={24} marginTop={24} marginBottom={24}>
                 
