@@ -114,7 +114,8 @@ const IssueLicenseForm = ({
 						label="Clase de licencia"
 						name="licenseClass"
 						onChange={onChangeLicense}
-						value={ownerFound ? license.licenseClass : ''}
+                        value={ownerFound ? license.licenseClass : ''}
+                        disabled={!ownerFound}
 					>
 						<option value="A" selected>
 							A
@@ -131,7 +132,7 @@ const IssueLicenseForm = ({
 							onClick={getCostAndValidUntil}
 							appearance="primary"
 							marginLeft={16}
-							height={30}
+                            height={30}
 						>
 							Calcular costo y vigencia
 						</Button>
