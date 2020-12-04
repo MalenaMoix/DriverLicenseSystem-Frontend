@@ -1,7 +1,7 @@
 import React from 'react'
 import IssueLicenceForm from '../components/IssueLicenseForm'
 
-const IssueLicense = ({license, licenseOwner, costIsCalculated,ownerFound, dialogIsShown, handleConfirmDialog, handleCancelDialog, onChangeLicense, onChangeLicenseOwner, onSubmit, onCancel, getLicenseOwner, getCostAndValidUntil}) =>(
+const IssueLicense = ({license, licenseOwner, costIsCalculated,ownerFound, dialogIsShown, handleConfirmDialog, handleCancelDialog, onChangeLicense, onChangeLicenseOwner, onSubmit, onCancel, getLicenseOwner, getCostAndValidUntil, getCurrentLicensesClass}) =>(
     <div>
         <IssueLicenceForm
             license={license}
@@ -17,6 +17,7 @@ const IssueLicense = ({license, licenseOwner, costIsCalculated,ownerFound, dialo
             onCancel={onCancel}
             getLicenseOwner={getLicenseOwner}
             getCostAndValidUntil={getCostAndValidUntil}
+            getCurrentLicensesClass={getCurrentLicensesClass}
         />
     </div>
 )
