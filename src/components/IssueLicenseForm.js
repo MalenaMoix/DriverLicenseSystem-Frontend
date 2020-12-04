@@ -1,6 +1,6 @@
 import React from 'react'
 import {TextInputField,TextareaField,Button,SelectField,Pane,Dialog} from "evergreen-ui"
-const IssueLicenseForm = ({ license, licenseOwner, costIsCalculated,ownerFound,dialogIsShown, handleConfirmDialog, handleCancelDialog, onChangeLicense, onChangeLicenseOwner, onSubmit, onCancel, getLicenseOwner, getCostAndValidUntil }) =>(
+const IssueLicenseForm = ({ license, licenseOwner, costIsCalculated,ownerFound,dialogIsShown, handleConfirmDialog, handleCancelDialog, onChangeLicense, onChangeLicenseOwner, onSubmit, onCancel, getLicenseOwner, getCostAndValidUntil, getCurrentLicensesClass }) =>(
   
     <div className="container">
      
@@ -71,7 +71,7 @@ const IssueLicenseForm = ({ license, licenseOwner, costIsCalculated,ownerFound,d
                     name="bloodTypeLbl"
                     placeHolde={""}
                     disabled
-                    value={ownerFound ? licenseOwner.bloodType : ""}
+                    value={ownerFound ? licenseOwner.bloodType+licenseOwner.rhFactor : ""}
                 />
     
                 <TextInputField
@@ -82,6 +82,14 @@ const IssueLicenseForm = ({ license, licenseOwner, costIsCalculated,ownerFound,d
                     value={ownerFound ? (licenseOwner.donor ? "Si" : "No") : ""}
                 />
 
+                <TextInputField
+                    label="Licencias vigentes:"
+                    name="currentLicensesLbl"
+                    placeHolde={""}
+                    disabled
+                    value={ownerFound ? getCurrentLicensesClass() : ""}
+                />
+
                 <Pane display="flex">
                     <SelectField
                         flex={1}
@@ -89,6 +97,7 @@ const IssueLicenseForm = ({ license, licenseOwner, costIsCalculated,ownerFound,d
                         name="licenseClass"
                         onChange={onChangeLicense}
                         value={ownerFound ? license.licenseClass : ""}
+                        disabled={licenseOwner.name!==""? false : true}
                     >
                         <option value="A" selected>A</option>
                         <option value="B">B</option>

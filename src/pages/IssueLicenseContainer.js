@@ -1,4 +1,4 @@
-import { toaster } from 'evergreen-ui'
+import { LessThanIcon, toaster } from 'evergreen-ui'
 import React, { useState} from 'react'
 import IssueLicense from './IssueLicense'
 
@@ -11,6 +11,7 @@ const IssueLicenseContainer = ({history}) =>{
         address:"",
         observations:"",
         bloodType:"",
+        rhFactor:"",
         donor:"",
         licensesList:[]
     })
@@ -65,14 +66,17 @@ const IssueLicenseContainer = ({history}) =>{
                        
                         setOwnerFound(true)
                         setLicenseOwner(data)
-                        setLicense({...license, licenseOwner})}
-                    
+                        setLicense({...license, licenseOwner})
+
+                    }
                     else{
                         setOwnerFound(false)
                         console.log("No existe y doc es null")
+                        
                         //TODO Borrar datos de la pantalla
                         setDialogIsShown(true)
                     }
+
                 }
                 else{
                     setOwnerFound(false)
@@ -86,8 +90,7 @@ const IssueLicenseContainer = ({history}) =>{
                 toaster.danger("ERROR AL BUSCAR TITULAR EN LA BASE DE DATOS.", {duration:5})
             }
         }
-       
-
+        console.log(licenseOwner) //TODO sacar este log
     }
     const getCostAndValidUntil = async e =>{
         e.preventDefault();
@@ -99,7 +102,19 @@ const IssueLicenseContainer = ({history}) =>{
                 setCostIsCalculated(true)
                 data.observations=observations
                 setLicense({...license, licenseCost: data.licenseCost, licenseTerm:data.licenseTerm})
-              
+                
+                let include = false
+                let listSize = 0
+                while(!include && licenseOwner.licensesList.length>listSize){
+                    if(licenseOwner.licensesList[listSize].licenseClass===license.licenseClass){
+                        include=true
+                    }
+                    listSize++
+                    console.log("Entro al while")
+                }
+                if(include){
+                    toaster.notify("La licencia será renovada")
+                }
             } catch (error) {
                 console.log("Error en la DB")
                 toaster.danger("ERROR AL CALCULAR COSTO Y VIGENCIA DE LA LICENCIA.", {duration:5})
@@ -163,6 +178,16 @@ const IssueLicenseContainer = ({history}) =>{
         history.push("/registerUser")
     }
 
+    const getCurrentLicensesClass = () =>{
+        let licensesClasses = []
+        if(ownerFound){
+            licenseOwner.licensesList.forEach(e => {
+                licensesClasses.push(e.licenseClass)
+            });
+        }
+        return licensesClasses
+    }
+
     return <IssueLicense
         license={license}
         licenseOwner={licenseOwner}
@@ -177,6 +202,7 @@ const IssueLicenseContainer = ({history}) =>{
         onCancel={handleCancel}
         getLicenseOwner={getLicenseOwner}
         getCostAndValidUntil={getCostAndValidUntil}
+        getCurrentLicensesClass={getCurrentLicensesClass}
     />
 }
 
