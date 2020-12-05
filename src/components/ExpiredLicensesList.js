@@ -1,48 +1,94 @@
 import React, {useState} from 'react';
 import {Table, TableBody, TableHead} from "evergreen-ui";
 
-function ExpiredLicensesList(props) {
+function ExpiredLicensesList() {
 
     const [licenses, setLicenses] = useState([{
-        id:"",
-        licenseOwner:{},
+        id: 123,
+        licenseOwner:{
+            document: 1234456789,
+            name: "Nombre titular",
+            lastName: "Apellido",
+            address: 'Falsa 123, Springfield'
+        },
         licenseClass:"A",
         observations:"",
-        licenseTerm:"",
+        licenseTerm:"4/12/2025",
+        licenseCost:""
+    },{
+        id: 124,
+        licenseOwner:{
+            document: 987654312,
+            name: "Nombre titular 4",
+            lastName: "Apellido 4",
+            address: 'Falsa 124, Springfield'
+        },
+        licenseClass:"H",
+        observations:"",
+        licenseTerm:"4/10/2023",
+        licenseCost:""
+    },{
+        id: 125,
+        licenseOwner:{
+            document: 65321654987,
+            name: "Nombre titular 5",
+            lastName: "Apellido 5",
+            address: 'Falsa 124, Springfield'
+        },
+        licenseClass:"C",
+        observations:"",
+        licenseTerm:"4/2/2030",
+        licenseCost:""
+    },{
+        id: 126,
+        licenseOwner:{
+            document: 98765132,
+            name: "Nombre titular 6",
+            lastName: "Apellido 6",
+            address: 'Falsa 126, Springfield'
+        },
+        licenseClass:"G",
+        observations:"",
+        licenseTerm:"4/12/2025",
         licenseCost:""
     }])
 
     return (
-        <Table className="flex-lg-wrap">
-            <TableHead>
-                <Table.TextHeaderCell>
-                    DNI
-                </Table.TextHeaderCell>
-                <Table.TextHeaderCell>
-                    Nombre
-                </Table.TextHeaderCell>
-                <Table.TextHeaderCell>
-                    Apellido
-                </Table.TextHeaderCell>
-            </TableHead>
-            <TableBody>
-                <Table.Row key={123}>
-                    <Table.TextCell>Prueba DNI</Table.TextCell>
-                    <Table.TextCell>Prueba Nombre</Table.TextCell>
-                    <Table.TextCell>Prueba Apellido</Table.TextCell>
-                </Table.Row>
-                <Table.Row key={1234}>
-                    <Table.TextCell>Prueba DNI 2</Table.TextCell>
-                    <Table.TextCell>Prueba Nombre 2</Table.TextCell>
-                    <Table.TextCell>Prueba Apellido 2</Table.TextCell>
-                </Table.Row>
-                <Table.Row key={1234}>
-                    <Table.TextCell>Prueba DNI 3</Table.TextCell>
-                    <Table.TextCell>Prueba Nombre 3</Table.TextCell>
-                    <Table.TextCell>Prueba Apellido 3</Table.TextCell>
-                </Table.Row>
-            </TableBody>
-        </Table>
+        <>
+            <h1>Licencias Expiradas</h1>
+            <Table className="flex-lg-wrap">
+                <TableHead>
+                    <Table.TextHeaderCell>
+                        Apellido y nombre
+                    </Table.TextHeaderCell>
+                    <Table.TextHeaderCell>
+                        Documento
+                    </Table.TextHeaderCell>
+                    <Table.TextHeaderCell>
+                        Domicilio
+                    </Table.TextHeaderCell>
+                    <Table.TextHeaderCell>
+                        Fecha expiración
+                    </Table.TextHeaderCell>
+                    <Table.TextHeaderCell>
+                        Clase
+                    </Table.TextHeaderCell>
+                </TableHead>
+                <TableBody>
+                    {
+                        licenses.map(license =>(
+                            <Table.Row key={license.id}>
+                                <Table.Cell>{license.licenseOwner.lastName} {license.licenseOwner.name}</Table.Cell>
+                                <Table.Cell>{license.licenseOwner.document}</Table.Cell>
+                                <Table.Cell>{license.licenseOwner.address}</Table.Cell>
+                                <Table.Cell>{license.licenseTerm}</Table.Cell>
+                                <Table.Cell>{license.licenseClass}</Table.Cell>
+                            </Table.Row>
+                        ))
+                    }
+                </TableBody>
+            </Table>
+        </>
     );
 }
 
