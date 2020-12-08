@@ -1,5 +1,6 @@
 import { LessThanIcon, toaster } from 'evergreen-ui'
 import React, { useState} from 'react'
+import { Redirect } from 'react-router-dom'
 import IssueLicense from './IssueLicense'
 
 const IssueLicenseContainer = ({history}) =>{
@@ -13,6 +14,7 @@ const IssueLicenseContainer = ({history}) =>{
         bloodType:"",
         rhFactor:"",
         donor:"",
+        gender:"",
         licensesList:[]
     })
     const [license, setLicense] = useState({
@@ -63,7 +65,7 @@ const IssueLicenseContainer = ({history}) =>{
                     let data = await res.json()
                     console.log(data.document)
                     if(data.document !== null){
-                       
+                       console.log(data.document)
                         setOwnerFound(true)
                         setLicenseOwner(data)
                         setLicense({...license, licenseOwner})
@@ -85,6 +87,7 @@ const IssueLicenseContainer = ({history}) =>{
                     setDialogIsShown(true)
                 }
             } catch (error) {
+                console.log(error)
                 setOwnerFound(false)
                 console.log("Error de usuario")
                 toaster.danger("ERROR AL BUSCAR TITULAR EN LA BASE DE DATOS.", {duration:5})
@@ -137,11 +140,24 @@ const IssueLicenseContainer = ({history}) =>{
                 },
                 body: JSON.stringify(license)
             }
+                     
+            console.log(license.licenseCost)
+               
+                      
             let res = await fetch(`http://localhost:9090/license`, config)
+            let idLicense = ""
             switch(res.status){
+               
                 case (200):{
-                    toaster.success("LICENCIA GUARDADA CON EXITO", {duration:5}) 
-                    history.replace("/main")
+                    res.text().then(value => {
+                        idLicense=value
+                        console.log("ES EL ID DE LA LICENCIA" + idLicense)
+                        //Tuve que usar este metodo porque con el fetch no se descarga el PDF.
+                        window.location=`http://localhost:9090/license/licensePDF/${idLicense}` 
+                        toaster.success("LICENCIA GUARDADA CON EXITO", {duration:5}) 
+                        history.replace("/main")
+                    })                    
+                   
                     break
                 }
                 case (403):{
@@ -152,10 +168,10 @@ const IssueLicenseContainer = ({history}) =>{
                     toaster.danger("ERROR DEL SERVIDOR.", {duration:5})
                 }
             }//.then para mostrar algo aca TODO
-            
            
         } catch (error) {
             console.log("Error en el POST")
+            console.log(error)
             toaster.danger("No se pudo guardar la licencia. Reintententelo.", {duration:5})
             //Ver si pongo algo aca
         }

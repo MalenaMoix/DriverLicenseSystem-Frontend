@@ -1,5 +1,6 @@
 import React from 'react'
 import {TextInputField,TextareaField,Button,SelectField,Pane,Dialog} from "evergreen-ui"
+import { Link, Redirect } from 'react-router-dom'
 const IssueLicenseForm = ({ license, licenseOwner, costIsCalculated,ownerFound,dialogIsShown, handleConfirmDialog, handleCancelDialog, onChangeLicense, onChangeLicenseOwner, onSubmit, onCancel, getLicenseOwner, getCostAndValidUntil, getCurrentLicensesClass }) =>(
   
     <div className="container">
@@ -138,8 +139,10 @@ const IssueLicenseForm = ({ license, licenseOwner, costIsCalculated,ownerFound,d
                 ></TextareaField>
 
                 <Pane>
+
                     <Button onClick={onCancel} marginBottom={16} height={30} appearance="primary">Cancelar</Button>
                     <Button onClick={onSubmit} marginBottom={16} marginLeft={16} height={30} appearance="primary">Aceptar</Button>
+              
                 </Pane>
             </Pane>
         </form>
