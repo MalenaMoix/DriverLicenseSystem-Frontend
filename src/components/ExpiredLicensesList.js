@@ -1,14 +1,16 @@
 import React from 'react';
-import {Button, Table, TableBody, TableHead} from "evergreen-ui";
+import {Button, Pane, Table, TableBody, TableHead} from "evergreen-ui";
 
 
 function ExpiredLicensesList({licenses, goBack}) {
 
 
     return (
-        <>
-            <h1>Licencias Expiradas</h1>
-            <Table className="flex-lg-wrap">
+        <Pane marginLeft={24} marginRight={24} marginTop={24} marginBottom={24}>
+            <Pane width={"max-content"} margin={"auto"} marginBottom={40}>
+                <h1>Licencias Expiradas</h1>
+            </Pane>
+            <Table margin={"auto"} marginBottom={30} maxWidth={"80%"}>
                 <TableHead>
                     <Table.TextHeaderCell>
                         Apellido y nombre
@@ -40,8 +42,10 @@ function ExpiredLicensesList({licenses, goBack}) {
                     }
                 </TableBody>
             </Table>
-            <Button onClick={goBack}>Volver</Button>
-        </>
+            <Pane margin={"auto"} width={"max-content"} >
+                <Button onClick={goBack} appearance={"primary"} height={40}>Volver</Button>
+            </Pane>
+        </Pane>
     );
 }
 
