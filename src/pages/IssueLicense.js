@@ -1,5 +1,5 @@
-import React from 'react'
-import IssueLicenceForm from '../components/IssueLicenseForm'
+import React from 'react';
+import IssueLicenceForm from '../components/IssueLicenseForm';
 
 const IssueLicense = ({license, licenseOwner, costIsCalculated,ownerFound, dialogIsShown, handleConfirmDialog, handleCancelDialog, onChangeLicense, onChangeLicenseOwner, onSubmit, onCancel, getLicenseOwner, getCostAndValidUntil, getCurrentLicensesClass}) =>(
     <div>
@@ -22,4 +22,4 @@ const IssueLicense = ({license, licenseOwner, costIsCalculated,ownerFound, dialo
     </div>
 )
 
-export default IssueLicense
+export default IssueLicense;

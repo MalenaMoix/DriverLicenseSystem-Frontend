@@ -26,38 +26,30 @@ const IssueLicenseContainer = ({history}) =>{
         licenseCost:""
     })
 
-    const[costIsCalculated, setCostIsCalculated] = useState(false)
-    const[ownerFound, setOwnerFound] = useState(false)
-    const[dialogIsShown, setDialogIsShown] = useState(false)
+	const [costIsCalculated, setCostIsCalculated] = useState(false);
+	const [ownerFound, setOwnerFound] = useState(false);
+	const [dialogIsShown, setDialogIsShown] = useState(false);
 
-    const handleChangeLicense = e => {
-       
-        if(e.target.name==="licenseClass"){
-            setCostIsCalculated(false)
-        }
-        setLicense({
-            ...license,
-            [e.target.name]: e.target.value
-        })
-    }
+	const handleChangeLicense = (e) => {
+		if (e.target.name === 'licenseClass') {
+			setCostIsCalculated(false);
+		}
+		setLicense({
+			...license,
+			[e.target.name]: e.target.value,
+		});
+	};
 
-    const handleChangeLicenseOwner = e => {
-        setLicenseOwner({
-            ...licenseOwner,
-            [e.target.name]: e.target.value
-        })
-    }
+	const handleChangeLicenseOwner = (e) => {
+		setLicenseOwner({
+			...licenseOwner,
+			[e.target.name]: e.target.value,
+		});
+	};
 
-    const getLicenseOwner = async e => {
-        setCostIsCalculated(false)
-        e.preventDefault();
-      
-        if(licenseOwner.document===""){
-            setOwnerFound(false)
-            toaster.danger("POR FAVOR, INGRESE EL DNI DEL TITULAR.", {duration:5})
-        }
-        else{
-            try {
+	const getLicenseOwner = async (e) => {
+		setCostIsCalculated(false);
+		e.preventDefault();
 
                 let res = await fetch(`http://localhost:9090/owner/${licenseOwner.document}`)
                 
@@ -181,18 +173,18 @@ const IssueLicenseContainer = ({history}) =>{
     }
     }
 
-    const handleCancel = e =>{
-        e.preventDefault()
-        history.replace("/main")
-    }
+	const handleCancel = (e) => {
+		e.preventDefault();
+		history.replace('/main');
+	};
 
-    const handleCancelDialog = () =>{
-        setDialogIsShown(false)
-    }
-    const handleConfirmDialog = () => {
-        setDialogIsShown(false)
-        history.push("/registerUser")
-    }
+	const handleCancelDialog = () => {
+		setDialogIsShown(false);
+	};
+	const handleConfirmDialog = () => {
+		setDialogIsShown(false);
+		history.push('/registerUser');
+	};
 
     const getCurrentLicensesClass = () =>{
         let licensesClasses = []
@@ -222,4 +214,4 @@ const IssueLicenseContainer = ({history}) =>{
     />
 }
 
-export default IssueLicenseContainer
+export default IssueLicenseContainer;
