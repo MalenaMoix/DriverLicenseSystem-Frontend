@@ -1,12 +1,20 @@
-import React from 'react';
-import {
-	TextInputField,
-	TextareaField,
-	Button,
-	SelectField,
-	Pane,
-	Dialog,
-} from 'evergreen-ui';
+
+import React from 'react'
+import {TextInputField,TextareaField,Button,SelectField,Pane,Dialog} from "evergreen-ui"
+import { Link, Redirect } from 'react-router-dom'
+const IssueLicenseForm = ({ license, licenseOwner, costIsCalculated,ownerFound,dialogIsShown, handleConfirmDialog, handleCancelDialog, onChangeLicense, onChangeLicenseOwner, onSubmit, onCancel, getLicenseOwner, getCostAndValidUntil, getCurrentLicensesClass }) =>(
+  
+    <div className="container">
+     
+        <Dialog
+            isShown={dialogIsShown}
+            title="TITULAR INEXISTENTE"
+            confirmLabel="Crear titular"
+            onConfirm={handleConfirmDialog}
+            onCancel={handleCancelDialog}
+            cancelLabel="No">
+            ¿Desea crear un nuevo titular?
+        </Dialog>
 
 const IssueLicenseForm = ({
 	license,
@@ -75,21 +83,59 @@ const IssueLicenseForm = ({
 					}
 				/>
 
-				<TextInputField
-					label="Fecha de nacimiento:"
-					name="birthDateLbl"
-					placeHolde=""
-					disabled
-					value={ownerFound ? licenseOwner.birthDate : ''}
-				/>
+                <TextInputField
+                    label="Direccion:"
+                    name="addressLbl"
+                    placeHolde={""}
+                    disabled
+                    value={ownerFound ? licenseOwner.address : ""}
+                />
+            
+                <TextInputField
+                    label="Grupo sanguineo:"
+                    name="bloodTypeLbl"
+                    placeHolde={""}
+                    disabled
+                    value={ownerFound ? licenseOwner.bloodType+licenseOwner.rhFactor : ""}
+                />
+    
+                <TextInputField
+                    label="Es donante:"
+                    name="isDonorLbl"
+                    placeHolde={""}
+                    disabled
+                    value={ownerFound ? (licenseOwner.donor ? "Si" : "No") : ""}
+                />
 
-				<TextInputField
-					label="Direccion:"
-					name="addressLbl"
-					placeHolde=""
-					disabled
-					value={ownerFound ? licenseOwner.address : ''}
-				/>
+                <TextInputField
+                    label="Licencias vigentes:"
+                    name="currentLicensesLbl"
+                    placeHolde={""}
+                    disabled
+                    value={ownerFound ? getCurrentLicensesClass() : ""}
+                />
+
+                <Pane display="flex">
+                    <SelectField
+                        flex={1}
+                        label="Clase de licencia"
+                        name="licenseClass"
+                        onChange={onChangeLicense}
+                        value={ownerFound ? license.licenseClass : ""}
+                        disabled={licenseOwner.name!==""? false : true}
+                    >
+                        <option value="A" selected>A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="G">G</option>
+                    </SelectField>
+                    <Pane alignItems="center" display="flex">
+                        <Button onClick={getCostAndValidUntil} appearance="primary" marginLeft={16} height={30}>Calcular costo y vigencia</Button>
+                    </Pane>
+                </Pane>
 
 				<TextInputField
 					label="Grupo sanguineo:"
@@ -139,13 +185,16 @@ const IssueLicenseForm = ({
 					</Pane>
 				</Pane>
 
-				<TextInputField
-					label="Valida hasta:"
-					name="licenseTermLbl"
-					placeHolde=""
-					disabled
-					value={costIsCalculated ? license.licenseTerm : ''}
-				/>
+                <Pane>
+
+                    <Button onClick={onCancel} marginBottom={16} height={30} appearance="primary">Cancelar</Button>
+                    <Button onClick={onSubmit} marginBottom={16} marginLeft={16} height={30} appearance="primary">Aceptar</Button>
+              
+                </Pane>
+            </Pane>
+        </form>
+    </div>
+)
 
 				<TextInputField
 					label="Costo:"
