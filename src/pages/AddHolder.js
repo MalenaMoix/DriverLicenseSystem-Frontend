@@ -67,13 +67,15 @@ const AddHolder = ({history}) => {
 				"lastName":holder.lastName,
 				"birthDate":holder.birthDate.format('YYYY-MM-DD'),
 				"address":`${holder.address}, ${holder.location}, ${holder.province}`,
-				"observations":"",
+				"observations":holder.observations,
 				"bloodType":holder.bloodType,
 				"rhFactor":holder.rhFactor,
 				"donor":holder.donor,
+				"gender":holder.gender,
 				"licensesList":[]
 			};
 			console.log(data);
+			
 			axios.post('http://localhost:9090/owner',data).then(function (response) {
 				setShowDialog(true);
 				console.log(`response: ${response}`);
@@ -99,11 +101,10 @@ const AddHolder = ({history}) => {
 				isShown={showDialog}
 				intent={"success"}
 				title="Titular creado con exito"
-				confirmLabel="Dar de alta licensia"
+				confirmLabel="Dar de alta licencia"
 				onConfirm={()=> history.replace('/issueLicense')}
-				onCancel={()=> history.replaceAll('/main')}
+				onCancel={()=> history.replace('/main')}
 				cancelLabel="Ir al menu principal"
-				onCloseComplete={()=>history.reload()}
 			/>
 		<Pane
 			display="flex"
@@ -166,6 +167,19 @@ const AddHolder = ({history}) => {
 								name="text-input-name"
 								placeholder="Ingrese texto"
 								onChange={(event) => setHolder({...holder, name: event.target.value})}
+								marginRight={20}
+							/>
+						</Pane>
+						<Pane display="flex" alignItems="center">
+							<Strong size={500} marginRight={24}>
+									Genero:
+								</Strong>
+							<Combobox
+								width={120}
+								items={["Masculino","Femenino"]}
+								selectedItem={holder.gender}
+								onChange={(selected) => setHolder({...holder, gender:selected})}
+								placeholder="Genero"
 							/>
 						</Pane>
 					</Pane>
@@ -300,6 +314,8 @@ const AddHolder = ({history}) => {
 							width={400}
 							name="textarea-1"
 							placeholder="Ingrese texto"
+							onChange={(event) => setHolder({...holder, observations: event.target.value})}
+					
 						/>
 					</Pane>
 					<Pane
@@ -308,7 +324,7 @@ const AddHolder = ({history}) => {
 						justifyContent="space-between"
 					>
 						<Button height={40} intent="danger" onClick={ () => history.goBack()}>
-							Canclear
+							Cancelar
 						</Button>
 						<Button height={40} appearance="primary" intent="success"
 								isLoading={creatingHolder}

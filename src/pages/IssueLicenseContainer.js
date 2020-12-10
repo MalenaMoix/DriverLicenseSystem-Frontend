@@ -49,8 +49,8 @@ const IssueLicenseContainer = ({history}) =>{
 
 	const getLicenseOwner = async (e) => {
 		setCostIsCalculated(false);
-		e.preventDefault();
-
+        e.preventDefault();
+            try{
                 let res = await fetch(`http://localhost:9090/owner/${licenseOwner.document}`)
                 
                 if(res.ok){
@@ -84,9 +84,10 @@ const IssueLicenseContainer = ({history}) =>{
                 console.log("Error de usuario")
                 toaster.danger("ERROR AL BUSCAR TITULAR EN LA BASE DE DATOS.", {duration:5})
             }
+            console.log(licenseOwner) //TODO sacar este log
         }
-        console.log(licenseOwner) //TODO sacar este log
-    }
+    
+    
     const getCostAndValidUntil = async e =>{
         e.preventDefault();
         if(ownerFound){
@@ -170,7 +171,7 @@ const IssueLicenseContainer = ({history}) =>{
     }
     else{
         toaster.warning("Falta calcular costo y vigencia de la licencia", {duration:5})
-    }
+     }
     }
 
 	const handleCancel = (e) => {
