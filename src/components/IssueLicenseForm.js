@@ -1,8 +1,18 @@
 import React from 'react'
-import {TextInputField,TextareaField,Button,SelectField,Pane,Dialog} from "evergreen-ui"
+import {Heading,TextInputField,TextareaField,Button,SelectField,Pane,Dialog} from "evergreen-ui"
 const IssueLicenseForm = ({ license, licenseOwner, costIsCalculated,ownerFound,dialogIsShown, handleConfirmDialog, handleCancelDialog, onChangeLicense, onChangeLicenseOwner, onSubmit, onCancel, getLicenseOwner, getCostAndValidUntil, getCurrentLicensesClass }) =>(
   
     <div className="container">
+		<Pane
+			flex={1}
+			justifyContent="center"
+			display="flex"
+			borderBottom="default"
+			paddingBottom={20}>
+			
+				<Heading size={900}>Emitir licencia</Heading>
+		</Pane>
+		
      
         <Dialog
             isShown={dialogIsShown}
@@ -16,7 +26,7 @@ const IssueLicenseForm = ({ license, licenseOwner, costIsCalculated,ownerFound,d
 
         <form>           
             <Pane marginLeft={24} marginRight={24} marginTop={24} marginBottom={24}>
-                
+				
                 <Pane display="flex">
                     <TextInputField
                         flex={1}
@@ -137,10 +147,10 @@ const IssueLicenseForm = ({ license, licenseOwner, costIsCalculated,ownerFound,d
                     value={ownerFound ? license.observations : ""}
                 ></TextareaField>
 
-                <Pane>
-                    <Button onClick={onCancel} marginBottom={16} height={30} appearance="primary">Cancelar</Button>
-                    <Button onClick={onSubmit} marginBottom={16} marginLeft={16} height={30} appearance="primary">Aceptar</Button>
-                </Pane>
+             
+				<Button onClick={onCancel} marginBottom={16} height={30} appearance="primary" >Cancelar</Button>
+				<Button onClick={onSubmit} marginBottom={16} marginLeft={16} height={30} intent="success" appearance="primary">Emitir</Button>
+                
             </Pane>
         </form>
     </div>
